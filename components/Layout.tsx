@@ -13,7 +13,7 @@ Router.onRouteChangeError = () => NProgress.done()
 
 
 
-const Layout: React.SFC<{ title: string }> = ({ children }) => (
+const Layout: React.SFC<{ title: string }> = ({ children, title }) => (
   <div className="root">
     <Head>
       <title>Next Portfolio</title>
@@ -22,7 +22,9 @@ const Layout: React.SFC<{ title: string }> = ({ children }) => (
       <Link href="/"><a>Home</a></Link>
       <Link href="/about"><a>About</a></Link>
       <Link href="/hireme"><a>Hire Me</a></Link>
+      <Link href="/blog"><a>Blog</a></Link>
     </header>
+    <h1>{title}</h1>
     {children}
     <footer>&copy; {new Date().getFullYear()}</footer>
 

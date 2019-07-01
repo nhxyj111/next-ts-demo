@@ -1,9 +1,10 @@
-import Link from 'next/link'
+
 import Layout from '../components/Layout';
 import fetch from 'isomorphic-fetch'
+import Error from './_error'
 // import React, { useEffect, useState } from 'react';
 
-const About: React.FC<{ user: any }> = ({ user }) => {
+const About: React.FC<{ user: any, statusCode: number }> = ({ user, statusCode }) => {
   // const [user, setUser] = useState<any>()
 
   // useEffect(() => {
@@ -14,6 +15,10 @@ const About: React.FC<{ user: any }> = ({ user }) => {
   //       setUser(data)
   //     })
   // }, [])
+
+  if (statusCode) {
+    return <Error statusCode={statusCode} />
+  }
 
   return (
     <Layout title="About">
@@ -38,14 +43,15 @@ const About: React.FC<{ user: any }> = ({ user }) => {
 
 // @ts-ignore
 About.getInitialProps = async () => {
-  fetch('https://api.github.com/users/reedbarger')
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-    })
+  // fetch('https://api.github.com/users/reedbarger')
+  //   .then(res => res.json())
+  //   .then(data => {
+  //     console.log(data)
+  //   })
   const res = await fetch('https://api.github.com/users/reedbarger')
+  const statusCode = res.status > 200 ? res.status : false
   const data = await res.json()
-  return { user: data }
+  return { user: data, statusCode }
 }
 
 export default About
